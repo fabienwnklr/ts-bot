@@ -40,4 +40,4 @@ export class Reactor {
   }
 }
 
-export const reactor = new Reactor(Config.enableReactions);
+export const reactor = new Reactor(Config.enableReactions)

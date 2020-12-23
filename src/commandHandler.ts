@@ -1,8 +1,9 @@
-import { Message } from 'discord.js';
+import { Client, Message } from 'discord.js';
 import { CommandContext } from './models/command-context';
 import { reactor } from './reactions/reactor';
 // Commands
 import { HelpCommand } from './commands/help';
+import { GreetCommand } from './commands/greet';
 // Types
 import { Command } from 'types/command';
 
@@ -11,10 +12,12 @@ export class CommandHandler {
 
   private readonly prefix: string;
 
-  constructor(prefix: string) {
-    const commandClasses = [];
+  constructor(prefix: string, client: Client) {
+    const commandClasses = [
+      GreetCommand
+    ];
 
-    this.commands = commandClasses.map((CommandClass) => new CommandClass());
+    this.commands = commandClasses.map((CommandClass) => new CommandClass(client));
     this.commands.push(new HelpCommand(this.commands));
     this.prefix = prefix;
   }

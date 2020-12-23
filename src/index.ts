@@ -15,9 +15,9 @@ function validateConfig(botConf: botConfig) {
 
 validateConfig(Config);
 
-const commandHandler = new CommandHandler(Config.prefix);
-
 const client = new Discord.Client();
+
+const commandHandler = new CommandHandler(Config.prefix, client);
 
 client.on('ready', () => {
   console.log('Bot has started');
