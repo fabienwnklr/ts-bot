@@ -41,7 +41,9 @@ export class CommandHandler {
       }
     } else if (!allowedCommands.includes(matchedCommand)) {
       await message.reply("you aren't allowed to use that command. Try !help.");
-      await reactor.failure(message);
+      if (message.channel.type !== 'dm') {
+        await reactor.failure(message);
+      }
     } else {
       await matchedCommand
         .run(commandContext)
@@ -49,7 +51,10 @@ export class CommandHandler {
           reactor.success(message);
         })
         .catch((reason) => {
-          reactor.failure(message);
+          console.warn(reason);
+          if (message.channel.type !== 'dm') {
+            reactor.failure(message);
+          }
         });
     }
   }
@@ -58,5 +63,4 @@ export class CommandHandler {
   private isCommand(message: Message): boolean {
     return message.content.startsWith(this.prefix);
   }
-
 }
