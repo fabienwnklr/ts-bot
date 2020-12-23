@@ -1,23 +1,34 @@
-import 'dotenv/config';
+import 'dotenv/config'
 import Discord, { Message } from 'discord.js';
-import { Config } from './config';
+import { CommandHandler } from './commandHandler';
+import { Config } from './config/';
+
+// types
 import { botConfig } from './types/bot-config';
 
 /** Pre-startup validation of the bot config. */
 function validateConfig(botConf: botConfig) {
-    if (!botConf.token) {
+    if (!Config.token) {
         throw new Error('You need to specify your Discord bot token!');
     }
 }
 
 validateConfig(Config);
 
-const client: Discord.Client = new Discord.Client();
+const commandHandler = new CommandHandler(Config.prefix);
 
-client.login(Config.token);
+const client = new Discord.Client();
 
-client.on('ready', () => console.log('Bot has been started !'));
+client.on('ready', () => {
+    console.log('Bot has started');
+});
 
 client.on('message', (message: Message) => {
-    console.log(message);
+    commandHandler.handleMessage(message);
 });
+
+client.on('error', (e) => {
+    console.error('Discord client error!', e);
+});
+
+client.login(Config.token);
