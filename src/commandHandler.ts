@@ -4,6 +4,7 @@ import { reactor } from './reactions/reactor';
 // Commands
 import { HelpCommand } from './commands/help';
 import { GreetCommand } from './commands/greet';
+import { News } from './commands/news';
 // Types
 import { Command } from 'types/command';
 
@@ -14,7 +15,8 @@ export class CommandHandler {
 
   constructor(prefix: string, client: Client) {
     const commandClasses = [
-      GreetCommand
+      GreetCommand,
+      News
     ];
 
     this.commands = commandClasses.map((CommandClass) => new CommandClass(client));

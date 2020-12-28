@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import Discord, { Message } from 'discord.js';
+import { Client, Message } from 'discord.js';
 import { CommandHandler } from './commandHandler';
 import { Config } from './config/';
 
@@ -15,7 +15,7 @@ function validateConfig(botConf: botConfig) {
 
 validateConfig(Config);
 
-const client = new Discord.Client();
+const client = new Client();
 
 const commandHandler = new CommandHandler(Config.prefix, client);
 
